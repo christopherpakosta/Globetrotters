@@ -1,0 +1,60 @@
+
+//Chris (4-8-2017) 
+// This is what I was thinking for PIC24, but I wrote it like we were using the PIC16
+// P.S. I suck at coding so if something seems horribly wrong feel free to make fun of me plus
+// I have never used this site before, so hopfully you guys see this..
+
+//Should go something like this
+
+
+// For H-Bridge 1 below
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+uint ADR_H1;
+
+ADR_H1 = ADRESH1-ADRESH4;  //take difference of H-bridge 1 (two electromagnets connected in series for each H-bridge)
+
+if(ADR_H1 > 0)     //condition for H-bridge 1
+{
+INB = 0;          //directional pin for H-bridge  COUNTER-CLOCKWISE CURRENT DIRECTION
+INA =1;           //directional pin for H-bridge
+PWM = ADRESH1;     //current will be the same on each coil so only one result needed for PWM, if you take the opposite ADC result for should be opposite
+}
+
+else if(ADR_H1 < 0)     //condition for H-bridge 1
+{
+INA = 0;          //directional pin for H-bridge    CLOCKWISE CURRENT DIRECTION
+INB = 1;          //directional pin for H-bridge
+PWM = ADRESH1;    //current will be the same on each coil so only one result needed for PWM, if you take the opposite ADC result for should be opposite
+}
+
+else if(ADR_H1 = 0) //rare occasion
+{
+INA = 1;    //brakes H-Bridge, no current flow
+INB = 1;
+}
+
+// For H-Bridge 2 below
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+uint ADR_H2;
+
+ADR_H2 = ADRESH2-ADRESH3;  //take difference of H-bridge 2 (two electromagnets connected in series for each H-bridge)
+
+if(ADR_H2 > 0)     //condition for H-bridge 2
+{
+INB = 0;          //directional pin for H-bridge  COUNTER-CLOCKWISE CURRENT DIRECTION
+INA =1;           //directional pin for H-bridge
+PWM = ADRESH3;     //current will be the same on each coil so only one result needed for PWM, if you take the opposite ADC result for should be opposite
+}
+
+else if(ADR_H2 < 0)     //condition for H-bridge 2
+{
+INA = 0;          //directional pin for H-bridge    CLOCKWISE CURRENT DIRECTION
+INB = 1;          //directional pin for H-bridge
+PWM = ADRESH3;    //current will be the same on each coil so only one result needed for PWM, if you take the opposite ADC result for should be opposite
+}
+
+else if(ADR_H2 = 0) //rare occasion
+{
+INA = 1;    //brakes H-Bridge, no current flow
+INB = 1;
+}
